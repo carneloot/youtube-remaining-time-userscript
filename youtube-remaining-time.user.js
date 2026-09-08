@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         YouTube Remaining Time at Playback Speed
 // @namespace    https://github.com/carneloot/youtube-remaining-time-userscript
-// @version      1.0.1
+// @version      1.0.2
 // @description  Shows the video's remaining playback time, adjusted for the active playback speed.
 // @homepageURL  https://github.com/carneloot/youtube-remaining-time-userscript
 // @downloadURL  https://raw.githubusercontent.com/carneloot/youtube-remaining-time-userscript/main/youtube-remaining-time.user.js
@@ -45,6 +45,11 @@
     }
 
     const playbackRate = video.playbackRate || 1;
+    if (playbackRate === 1) {
+      display.hidden = true;
+      return;
+    }
+
     const realTimeRemaining = (video.duration - video.currentTime) / playbackRate;
 
     display.textContent = `−${formatDuration(realTimeRemaining)}`;

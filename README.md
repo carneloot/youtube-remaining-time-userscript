@@ -4,7 +4,7 @@ A Violentmonkey userscript that shows how much real time remains in a YouTube vi
 
 ![YouTube player showing the native timer followed by a speed-adjusted remaining-time label](images/youtube-remaining-time.png)
 
-At 2× speed, a 3:33 video shows `−1:47` remaining instead of `−3:33`.
+At 2× speed, a 3:33 video shows `−1:47` remaining instead of `−3:33`. At 1× speed, the extra label stays hidden.
 
 ## Install
 
