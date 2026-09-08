@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         YouTube Remaining Time at Playback Speed
 // @namespace    https://github.com/carneloot/youtube-remaining-time-userscript
-// @version      1.0.0
+// @version      1.0.1
 // @description  Shows the video's remaining playback time, adjusted for the active playback speed.
 // @homepageURL  https://github.com/carneloot/youtube-remaining-time-userscript
 // @downloadURL  https://raw.githubusercontent.com/carneloot/youtube-remaining-time-userscript/main/youtube-remaining-time.user.js
@@ -17,7 +17,7 @@
   'use strict';
 
   const DISPLAY_ID = 'yt-speed-adjusted-remaining-time';
-  const UPDATE_INTERVAL_MS = 250;
+  const REFRESH_INTERVAL_MS = 1000;
   let observedVideo;
 
   function formatDuration(seconds) {
@@ -53,8 +53,8 @@
   }
 
   function addDisplay() {
-    const rightControls = document.querySelector('.ytp-right-controls');
-    if (!rightControls || getDisplay()) return;
+    const timer = document.querySelector('.ytp-time-display');
+    if (!timer || getDisplay()) return;
 
     const display = document.createElement('span');
     display.id = DISPLAY_ID;
@@ -62,7 +62,7 @@
     display.style.marginRight = '12px';
     display.style.fontVariantNumeric = 'tabular-nums';
     display.style.cursor = 'default';
-    rightControls.prepend(display);
+    timer.insertAdjacentElement('afterend', display);
   }
 
   function observeVideo() {
@@ -81,10 +81,7 @@
     render();
   }
 
-  const observer = new MutationObserver(refresh);
-  observer.observe(document.documentElement, { childList: true, subtree: true });
-
   window.addEventListener('yt-navigate-finish', refresh);
-  window.setInterval(refresh, UPDATE_INTERVAL_MS);
+  window.setInterval(refresh, REFRESH_INTERVAL_MS);
   refresh();
 })();
